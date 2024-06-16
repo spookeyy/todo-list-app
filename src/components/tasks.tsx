@@ -10,7 +10,7 @@ export interface Task {
 }
 
 export default function Tasks() {
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const [tasks, setTasks] = useState<Task[]>([]); //Task[] = array of tasks
 
     useEffect(() => {
         fetch('http://localhost:3000/tasks')
@@ -20,10 +20,11 @@ export default function Tasks() {
 
 
     return (
-        <div>
-            <ul>
+        <div className="flex flex-col gap-4 p-4">
+            <ul className="flex flex-col gap-2 p-4 rounded-lg bg-slate-100">
                 {tasks.map((task) => (
-                    <li key={task.id}>{task.description}</li>
+                    <li className="flex items-center gap-2 p-2 rounded-lg bg-slate-200"
+                     key={task.id}>{task.description}</li>
                 ))}
             </ul>
         </div>
