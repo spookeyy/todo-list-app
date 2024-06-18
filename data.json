@@ -8,7 +8,7 @@
     {
       "id": 1,
       "description": "Buy groceries",
-      "completed": false
+      "completed": true
     },
     {
       "id": 2,
@@ -18,11 +18,6 @@
     {
       "id": 3,
       "description": "Call dentist",
-      "completed": false
-    },
-    {
-      "id": 4,
-      "description": "Workout",
       "completed": true
     },
     {
@@ -33,6 +28,11 @@
     {
       "id": 6,
       "description": "Play game tomorrow",
+      "completed": false
+    },
+    {
+      "id": 7,
+      "description": "df",
       "completed": false
     }
   ]

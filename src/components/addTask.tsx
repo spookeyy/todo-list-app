@@ -32,6 +32,8 @@ export default function AddTask() {
                 .then((response) => response.json())
                 .then((json) => setTasks(json));
         });
+
+        setTask({ id: 0, description: "", completed: false }); //reset task
     };
 
    
@@ -51,6 +53,7 @@ export default function AddTask() {
                     }
                     placeholder="Enter task"
                     className="p-2 rounded-lg"
+                    onFocus={(e) => e.target.select()}
                     required
                 />
                 <button

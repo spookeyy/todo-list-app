@@ -18,27 +18,35 @@ function Tasks() {
       .then((json) => setTasks(json));
   }, []);
 
-  //update task status
-const taskStatusChanged = (id: number, completed: boolean) => {
-  const newTasks = tasks?.map((task) => {
-    if (task.id === id) { //check if task.id is equal to id
-      return { ...task, completed };
-    }
-    return task;
-  });
-  setTasks(newTasks);
-};
+  //delete task
+  const deleteTask = (id: number) => {
+      fetch(`http://localhost:3000/tasks/${id}`, {
+        method: "DELETE",
+      }).then(() => {
+        const newTasks = tasks.filter((task) => task.id !== id);
+        setTasks(newTasks);
+      });
+    };
 
-//delete task
-const deleteTask = (id: number) => {
+  // checkbox func to update task status
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const taskStatusChanged = (id: number, completed: boolean) => {
     fetch(`http://localhost:3000/tasks/${id}`, {
-      method: "DELETE",
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ completed }),
     }).then(() => {
-      const newTasks = tasks.filter((task) => task.id !== id);
+      const newTasks = tasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, completed };
+        }
+        return task;
+      });
       setTasks(newTasks);
     });
-  };
-
+  }
   return (
     <div className="flex flex-col-2 gap-4 p-4 rounded-lg bg-gray-200">
       <ul className="flex flex-col gap-2 p-4 rounded-lg bg-slate-100">
@@ -48,11 +56,11 @@ const deleteTask = (id: number) => {
             key={task.id}
           >
             {task.description}
+
             <input
-              onChange={() => taskStatusChanged(task.id, !task.completed)}
               type="checkbox"
-              className="w-4 h-4"
               checked={task.completed}
+              onChange={() => taskStatusChanged(task.id, !task.completed)}
             />
             <button
               onClick={() => deleteTask(task.id)}
@@ -68,5 +76,4 @@ const deleteTask = (id: number) => {
     </div>
   );
 }
-
 export default Tasks;
